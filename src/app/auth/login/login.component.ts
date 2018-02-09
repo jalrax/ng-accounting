@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 import {UsersService} from '../../shared/services/users.service';
 import {User} from '../../shared/models/user.model';
@@ -17,21 +17,32 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   message: Message;
 
-  constructor(private userService: UsersService,
+  constructor(private usersService: UsersService,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.message = new Message('danger', '');
+
+    this.route.queryParams
+      .subscribe((params: Params) => {
+        if (params['canLogin']) {
+          this.showMessage({
+            text: 'You can login now',
+            type: 'success'
+          });
+        }
+      });
     this.form = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
     });
   }
 
-  showMessage(text: string, type: string = 'danger') {
-    this.message = new Message(type, text);
+  showMessage(message: Message) {
+    this.message = message;
     window.setTimeout(() => {
       this.message.text = '';
     }, 5000);
@@ -39,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const formData = this.form.value;
-    this.userService.getUserByEmail(formData.email)
+    this.usersService.getUserByEmail(formData.email)
       .subscribe((user: User) => {
         if (user) {
           if (user.password === formData.password) {
@@ -48,12 +59,17 @@ export class LoginComponent implements OnInit {
             this.authService.login();
             // this.router.navigate(['']);
           } else {
-            this.showMessage('Wrong password!');
+            this.showMessage({
+              text: 'Wrong password!',
+              type: 'danger'
+            });
           }
         } else {
-          this.showMessage('Wrong email!');
+          this.showMessage({
+            text: 'Wrong email!',
+            type: 'danger'
+          });
         }
       });
   }
-
 }
