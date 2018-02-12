@@ -1,21 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {User} from '../models/user.model';
 import 'rxjs/add/operator/map';
 
-@Injectable()
-export class UsersService {
+import {User} from '../models/user.model';
+import {BaseApi} from '../../system/shared/core/base-api';
 
-  constructor(private http: HttpClient) {
+@Injectable()
+export class UsersService extends BaseApi {
+
+  constructor(public http: HttpClient) {
+    super(http);
   }
 
   getUserByEmail(email: string): Observable<User> {
-    return this.http.get(`http://localhost:3000/users?email=${email}`)
-      .map((user: User[]) => user[0] ? user[0] : undefined);
+    return this.get(`users?email=${email}`);
   }
 
-  createNewUser(user: User): Observable<any> {
-    return this.http.post(`http://localhost:3000/users`, user);
+  createNewUser(user: User): Observable<User> {
+    return this.post('users', user);
   }
 }
