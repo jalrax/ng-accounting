@@ -15,19 +15,14 @@
           </thead>
           <tbody>
           <tr>
-            <td>доллар</td>
-            <td>24</td>
-            <td>12.12.2017</td>
+            <td>RUB</td>
+            <td>1</td>
+            <td>{{currency.date | sertMoment:'YYYY-MM-DD'}}</td>
           </tr>
-          <tr>
-            <td>евро</td>
-            <td>26</td>
-            <td>12.12.2017</td>
-          </tr>
-          <tr>
-            <td>рубль</td>
-            <td>0.4</td>
-            <td>12.12.2017</td>
+          <tr *ngFor="let cur of currencies">
+            <td>{{cur}}</td>
+            <td>{{currency.rates[cur]}}</td>
+            <td>{{currency.date | sertMoment:'YYYY-MM-DD'}}</td>
           </tr>
           </tbody>
         </table>

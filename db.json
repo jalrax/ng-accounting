@@ -5,6 +5,12 @@
       "email": "wfm@mail.ru",
       "password": "12345678",
       "name": "Администратор"
+    },
+    {
+      "email": "di3orlive@yahoo.com",
+      "password": "123456",
+      "name": "hgfd",
+      "id": 2
     }
   ],
   "bill": {
@@ -18,14 +24,19 @@
       "id": 1
     },
     {
-      "name": "Еда",
-      "capacity": 10000,
+      "name": "Жратва",
+      "capacity": 25000,
       "id": 2
     },
     {
-      "id": 3,
       "name": "Машина",
-      "capacity": 7000
+      "capacity": 7000,
+      "id": 3
+    },
+    {
+      "name": "Категория",
+      "capacity": 5000,
+      "id": 4
     }
   ],
   "events": [

@@ -1,0 +1,87 @@
+<div class="card">
+  <div class="card-header bordered">
+    <div class="header-block">
+      <h3 class="title">Редактировать категорию</h3>
+    </div>
+  </div>
+  <div class="card-block">
+    <div
+      class="alert alert-{{message.type}}"
+      *ngIf="message.text"
+    >{{message.text}}
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="control-label" for="edit-select-category">Pick a category</label>
+        <select
+          class="form-control"
+          id="edit-select-category"
+          [(ngModel)]="currentCategoryId"
+          [ngModelOptions]="{standalone: true}"
+          (change)="onCategoryChange()"
+        >
+          <option
+            *ngFor="let category of categories"
+            [value]="category.id"
+          >
+            {{category.name}}
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('name').invalid && form.get('name').touched}"
+      >
+        <label class="control-label" for="edit-category-name">Введите название</label>
+        <input
+          type="text"
+          id="edit-category-name"
+          class="form-control"
+          formControlName="name"
+          [ngModel]="currentCategory.name"
+        >
+        <span
+          *ngIf="form.get('name').invalid && form.get('name').touched"
+          class="form-help-text"
+        >
+          <span *ngIf="form.get('name')['errors']['required']">Enter category name</span>
+          <span
+            *ngIf="!form.get('name')['errors']['required'] && form.get('name')['errors']['minlength']['requiredLength']">
+        Category name should contain more than {{form.get('name')['errors']['minlength']['requiredLength']}} symbols.
+        You have only {{form.get('name')['errors']['minlength']['actualLength']}} symbols.
+          </span>
+        </span>
+      </div>
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('capacity').invalid && form.get('capacity').touched}"
+      >
+        <label class="control-label" for="edit-category-value">Введите лимит</label>
+        <input
+          type="number"
+          id="edit-category-value"
+          class="form-control"
+          formControlName="capacity"
+          min="1"
+          [ngModel]="currentCategory.capacity"
+        >
+        <span
+          class="form-help-text"
+          *ngIf="form.get('capacity').invalid && form.get('capacity').touched"
+        >
+          <span *ngIf="form.get('capacity')['errors']['required']">Enter capacity</span>
+           <span
+             *ngIf="!form.get('capacity')['errors']['required'] && form.get('capacity')['errors']['min']"
+           >Capacity should be above 0
+           </span>
+        </span>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid"
+      >Редактировать
+      </button>
+    </form>
+  </div>
+</div>

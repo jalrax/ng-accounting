@@ -1,0 +1,63 @@
+<div class="card">
+  <div class="card-header bordered">
+    <div class="header-block">
+      <h3 class="title">Добавить категорию</h3>
+    </div>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('name').invalid && form.get('name').touched}"
+      >
+        <label class="control-label" for="category-name">Введите название</label>
+        <input
+          type="text"
+          id="category-name"
+          class="form-control"
+          formControlName="name"
+        >
+        <span
+          *ngIf="form.get('name').invalid && form.get('name').touched"
+          class="form-help-text"
+        >
+          <span *ngIf="form.get('name')['errors']['required']">Enter category name</span>
+          <span
+            *ngIf="!form.get('name')['errors']['required'] && form.get('name')['errors']['minlength']['requiredLength']">
+        Category name should contain more than {{form.get('name')['errors']['minlength']['requiredLength']}} symbols.
+        You have only {{form.get('name')['errors']['minlength']['actualLength']}} symbols.
+          </span>
+        </span>
+      </div>
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('capacity').invalid && form.get('capacity').touched}"
+      >
+        <label class="control-label" for="category-value">Введите лимит</label>
+        <input
+          type="number"
+          id="category-value"
+          class="form-control"
+          formControlName="capacity"
+          min="1"
+        >
+        <span
+          class="form-help-text"
+          *ngIf="form.get('capacity').invalid && form.get('capacity').touched"
+        >
+          <span *ngIf="form.get('capacity')['errors']['required']">Enter capacity</span>
+           <span
+             *ngIf="!form.get('capacity')['errors']['required'] && form.get('capacity')['errors']['min']"
+           >Capacity should be above 0
+           </span>
+        </span>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid"
+      >Добавить
+      </button>
+    </form>
+  </div>
+</div>
