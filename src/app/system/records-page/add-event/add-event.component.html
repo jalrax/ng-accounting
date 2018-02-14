@@ -5,36 +5,96 @@
     </div>
   </div>
   <div class="card-block">
-    <form>
-      <div class="form-group">
+    <div
+      class="alert alert-{{message.type}}"
+      *ngIf="message.text"
+    >
+      {{message.text}}
+    </div>
+    <form [formGroup]="form" (submit)="onSubmit()">
+      <div
+        class="form-group"
+      >
         <label class="control-label" for="category">Выберите категорию</label>
-        <select class="form-control" id="category">
-          <option>Option one</option>
-          <option>Option two</option>
-          <option>Option three</option>
-          <option>Option four</option>
+        <select
+          class="form-control"
+          id="category"
+          formControlName="category"
+        >
+          <option
+            *ngFor="let cat of categories"
+            [value]="cat.id"
+          >
+            {{cat.name}}
+          </option>
         </select>
       </div>
-      <div class="form-group">
+      <div
+        class="form-group"
+      >
         <label class="control-label">Выберите тип</label>
-        <div>
+        <div *ngFor="let type of types">
           <label>
-            <input class="radio" name="radios" type="radio">
-            <span>Доход</span>
-          </label>
-        </div>
-        <div>
-          <label>
-            <input class="radio" name="radios" type="radio" checked>
-            <span>Расход</span>
+            <input
+              class="radio"
+              name="type"
+              type="radio"
+              formControlName="type"
+              [value]="type.type"
+            >
+            <span>{{type.label}}</span>
           </label>
         </div>
       </div>
-      <div class="form-group">
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('amount').invalid && form.get('amount').touched}"
+      >
         <label class="control-label" for="amount">Введите сумму</label>
-        <input type="number" value="0" id="amount" class="form-control">
+        <input
+          type="number"
+          id="amount"
+          class="form-control"
+          formControlName="amount"
+          min="1"
+        >
+        <span
+          class="form-help-text"
+          *ngIf="form.get('amount').invalid && form.get('amount').touched"
+        >
+          <span *ngIf="form.get('amount')['errors']['required']">Enter amount</span>
+           <span
+             *ngIf="!form.get('amount')['errors']['required'] && form.get('amount')['errors']['min']"
+           >Amount should be above 0
+           </span>
+        </span>
       </div>
-      <button type="submit" class="btn btn-primary">Добавить</button>
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': form.get('description').invalid && form.get('description').touched}"
+      >
+        <label class="control-label" for="description">Введите описание</label>
+        <textarea
+          type="text"
+          id="description"
+          class="form-control"
+          placeholder="Напишите тут что-нибудь..."
+          formControlName="description"
+        >
+        <span
+          class="form-help-text"
+          *ngIf="form.get('description').invalid && form.get('description').touched"
+        >
+          <span *ngIf="form.get('description')['errors']['required']">Enter amount</span>
+        </span>
+        </textarea>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid"
+      >Добавить
+      </button>
     </form>
   </div>
 </div>

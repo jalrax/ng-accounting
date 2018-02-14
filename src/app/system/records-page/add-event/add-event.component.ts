@@ -1,16 +1,85 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Category} from '../../shared/models/category.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SERTEvent} from '../../shared/models/event.model';
+import * as moment from 'moment';
+import {EventsService} from '../../shared/services/events.service';
+import {Bill} from '../../shared/models/bill.model';
+import {BillService} from '../../shared/services/bill.service';
+import 'rxjs/add/operator/mergeMap';
+import {Message} from '../../../shared/models/message.model';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'sert-add-event',
   templateUrl: './add-event.component.html',
   styleUrls: ['./add-event.component.scss']
 })
-export class AddEventComponent implements OnInit {
+export class AddEventComponent implements OnInit, OnDestroy {
 
-  constructor() {
+  form: FormGroup;
+  message: Message;
+  sub1: Subscription;
+  sub2: Subscription;
+
+  types = [
+    {type: 'income', label: 'Доход'},
+    {type: 'outcome', label: 'Расход'}
+  ];
+
+  @Input() categories: Category[] = [];
+
+  constructor(private fb: FormBuilder,
+              private eventsService: EventsService,
+              private billService: BillService) {
   }
 
   ngOnInit() {
+    this.message = new Message('danger', '');
+    this.form = this.fb.group({
+      'category': [1, Validators.required],
+      'type': ['outcome', Validators.required],
+      'amount': [1, [Validators.required, Validators.min(1)]],
+      'description': [null, Validators.required]
+    });
   }
 
+  ngOnDestroy() {
+    if (this.sub1) {
+      this.sub1.unsubscribe();
+    }
+    if (this.sub2) {
+      this.sub2.unsubscribe();
+    }
+  }
+
+  onSubmit() {
+    const formData = this.form.value;
+    const event = new SERTEvent(formData.type, formData.amount, formData.category,
+      moment().format('DD.MM.YYYY HH:mm:SS'), formData.description);
+    this.sub1 = this.billService.getBill()
+      .subscribe((bill: Bill) => {
+        let value = 0;
+        if (formData.type === 'outcome') {
+          if (formData.amount > bill.value) {
+            this.showMessage(`Not enough funds. You lack ${formData.amount - bill.value} funds`);
+            return;
+          } else {
+            value = bill.value - formData.amount;
+          }
+        } else {
+          value = bill.value + formData.amount;
+        }
+        this.sub2 = this.billService.updateBill({value, currency: bill.currency})
+          .mergeMap(() => this.eventsService.addEvent(event))
+          .subscribe(() => {
+            this.form.reset();
+          });
+      });
+  }
+
+  private showMessage(text: string) {
+    this.message.text = text;
+    window.setTimeout(() => this.message.text = '', 5000);
+  }
 }

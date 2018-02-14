@@ -9,7 +9,7 @@
   <section class="section" *ngIf="isLoaded">
     <div class="row">
       <div class="col-md-6">
-        <sert-add-event></sert-add-event>
+        <sert-add-event [categories]="categories"></sert-add-event>
       </div>
       <div class="col-md-6">
         <sert-add-category (categoryAdd)="newCategoryAdded($event)"></sert-add-category>
