@@ -55,8 +55,8 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const formData = this.form.value;
-    const event = new SERTEvent(formData.type, formData.amount, formData.category,
-      moment().format('DD.MM.YYYY HH:mm:SS'), formData.description);
+    const event = new SERTEvent(formData.type, formData.amount, +formData.category,
+      moment().format('DD.MM.YYYY HH:mm:ss'), formData.description);
     this.sub1 = this.billService.getBill()
       .subscribe((bill: Bill) => {
         let value = 0;

@@ -15,4 +15,8 @@ export class EventsService extends BaseApi {
   addEvent(event: SERTEvent): Observable<SERTEvent> {
     return this.post('events', event);
   }
+
+  getEvents(): Observable<SERTEvent[]> {
+    return this.get('events');
+  }
 }
