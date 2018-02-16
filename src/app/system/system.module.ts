@@ -24,6 +24,7 @@ import {HistoryChartComponent} from './history-page/history-chart/history-chart.
 import {HistoryEventsComponent} from './history-page/history-events/history-events.component';
 import {HistoryDetailsComponent} from './history-page/history-details/history-details.component';
 import {HistoryFilterComponent} from './history-page/history-filter/history-filter.component';
+import {FilterPipe} from './shared/pipes/filter.pipe';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {HistoryFilterComponent} from './history-page/history-filter/history-filt
     HistoryChartComponent,
     HistoryEventsComponent,
     HistoryDetailsComponent,
-    HistoryFilterComponent
+    HistoryFilterComponent,
+    FilterPipe
   ],
   providers: [
     BillService,
