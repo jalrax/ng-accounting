@@ -11,10 +11,22 @@
       "password": "123456",
       "name": "hgfd",
       "id": 2
+    },
+    {
+      "email": "sert@ya.ru",
+      "password": "qwerty",
+      "name": "sert",
+      "id": 3
+    },
+    {
+      "email": "qwe@mail.ru",
+      "password": "qwerty",
+      "name": "qwe",
+      "id": 4
     }
   ],
   "bill": {
-    "value": 92700,
+    "value": 145600,
     "currency": "RUB"
   },
   "categories": [
@@ -35,7 +47,7 @@
     },
     {
       "name": "Путешествия",
-      "capacity": 5000,
+      "capacity": 12000,
       "id": 4
     }
   ],
@@ -87,6 +99,46 @@
       "date": "15.02.2018 19:47:07",
       "description": "Ремонт",
       "id": 6
+    },
+    {
+      "type": "income",
+      "amount": 1500,
+      "category": 4,
+      "date": "21.02.2018 22:28:51",
+      "description": "Бонус от начальника",
+      "id": 7
+    },
+    {
+      "type": "outcome",
+      "amount": 1100,
+      "category": 4,
+      "date": "21.02.2018 22:29:58",
+      "description": "Поездка в Таганрог",
+      "id": 8
+    },
+    {
+      "type": "income",
+      "amount": 500,
+      "category": 4,
+      "date": "21.02.2018 22:30:54",
+      "description": "Премия",
+      "id": 9
+    },
+    {
+      "type": "income",
+      "amount": 2000,
+      "category": 1,
+      "date": "21.02.2018 22:32:02",
+      "description": "Премия",
+      "id": 10
+    },
+    {
+      "type": "income",
+      "amount": 50000,
+      "category": 2,
+      "date": "21.02.2018 22:32:38",
+      "description": "Продал остатки еды",
+      "id": 11
     }
   ]
 }

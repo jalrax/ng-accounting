@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
 import {Category} from '../shared/models/category.model';
 import {SERTEvent} from '../shared/models/event.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'sert-history-page',
@@ -16,7 +17,9 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   sub1: Subscription;
   categories: Category[] = [];
   events: SERTEvent[] = [];
+  filteredEvents: SERTEvent[] = [];
   isLoaded = false;
+  isFilterVisible = false;
   chartData = [];
 
   constructor(private categoriesService: CategoriesService,
@@ -30,6 +33,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     ).subscribe((data: [Category[], SERTEvent[]]) => {
       this.categories = data[0];
       this.events = data[1];
+      this.setOriginalEvents();
       this.calculateCartData();
       this.isLoaded = true;
     });
@@ -41,10 +45,48 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleFilterVisibility(state: boolean) {
+    this.isFilterVisible = state;
+  }
+
+  openFilter() {
+    this.toggleFilterVisibility(true);
+  }
+
+  onFilterApply(filterData) {
+    this.toggleFilterVisibility(false);
+    this.setOriginalEvents();
+
+    const startPeriod = moment().startOf(filterData.period).startOf('d');
+    const endPeriod = moment().endOf(filterData.period).endOf('d');
+    this.filteredEvents = this.filteredEvents
+      .filter((e) => {
+        return filterData.types.indexOf(e.type) !== -1;
+      })
+      .filter((e) => {
+        return filterData.categories.indexOf(e.category.toString()) !== -1;
+      })
+      .filter((e) => {
+        const momentDate = moment(e.date, 'DD.MM.YYYY HH:mm:ss');
+        return momentDate.isBetween(startPeriod, endPeriod);
+      });
+    this.calculateCartData();
+  }
+
+  onFilterCancel() {
+    this.toggleFilterVisibility(false);
+    this.setOriginalEvents();
+    this.calculateCartData();
+  }
+
+  private setOriginalEvents() {
+    this.filteredEvents = this.events.slice();
+  }
+
   private calculateCartData(): void {
     this.chartData = [];
     this.categories.forEach((cat) => {
-      const catEvents = this.events.filter((event) => event.category === cat.id && event.type === 'outcome');
+      const catEvents = this.filteredEvents.filter((event) => event.category === cat.id && event.type === 'outcome');
       this.chartData.push({
         name: cat.name,
         value: catEvents.reduce((total, event) => {

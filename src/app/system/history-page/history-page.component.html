@@ -1,14 +1,28 @@
 <div class="title-block">
-  <h3 class="title">
+  <h3 class="title pull-left">
     Страница истории <span class="sparkline bar"></span>
   </h3>
+  <div class="pull-right">
+    <button class="btn-sm btn btn-primary-outline" (click)="openFilter()">
+      <i class="fa fa-filter"></i>
+    </button>
+  </div>
 </div>
 
-<div *ngIf="!isLoaded" class="text-center">Loading...</div>
+<div *ngIf="!isLoaded" class="text-center">
+  <sert-loader></sert-loader>
+</div>
 <div *ngIf="isLoaded">
   <sert-history-chart [data]="chartData"></sert-history-chart>
-  <sert-history-events [categories]="categories" [events]="events"></sert-history-events>
-  <sert-history-filter></sert-history-filter>
+  <sert-history-events [categories]="categories" [events]="filteredEvents"></sert-history-events>
+  <div *ngIf="isFilterVisible">
+    <sert-history-filter
+      [categories]="categories"
+      (filterApply)="onFilterApply($event)"
+      (filterCancel)="onFilterCancel()"
+    >
+    </sert-history-filter>
+  </div>
 </div>
 
 

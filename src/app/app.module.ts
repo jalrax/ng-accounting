@@ -7,23 +7,22 @@ import {AppRoutingModule} from './app-routing.module';
 import {UsersService} from './shared/services/users.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './shared/services/auth.service';
-import {SystemModule} from './system/system.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthGuardService} from './shared/services/auth-guard.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
-    SystemModule,
     BrowserAnimationsModule
   ],
-  providers: [UsersService, AuthService],
+  providers: [UsersService, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
