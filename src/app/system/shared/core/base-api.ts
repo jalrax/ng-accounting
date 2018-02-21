@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class BaseApi {
-  private baseUrl = 'http://localhost:3000/';
+  private baseUrl = 'https://gentle-peak-23036.herokuapp.com/';
 
   constructor(public http: HttpClient) {}
 
