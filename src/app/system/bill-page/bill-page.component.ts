@@ -46,7 +46,6 @@ export class BillPageComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.isLoaded = false;
     this.sub2 = this.billService.getCurrency()
-      .delay(2000)
       .subscribe((currency: any) => {
         this.currency = currency;
         this.isLoaded = true;

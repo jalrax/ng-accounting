@@ -24,7 +24,8 @@
           class="form-help-text"
     >
       <span *ngIf="form.get('email')['errors']['required']">Enter your email</span>
-      <span *ngIf="form.get('email')['errors']['email']">Enter correct email</span>
+      <span
+        *ngIf="!form.get('email')['errors']['required'] && form.get('email')['errors']['email']">Enter correct email</span>
       </span>
   </div>
   <div
