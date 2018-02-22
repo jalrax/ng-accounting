@@ -1,8 +1,9 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
+
 import {CategoriesService} from '../../shared/services/categories.service';
 import {Category} from '../../shared/models/category.model';
-import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'sert-add-category',

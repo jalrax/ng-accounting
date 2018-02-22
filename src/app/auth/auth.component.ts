@@ -1,5 +1,6 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+
 import {fadeStateTrigger} from '../shared/animations/fade.animation';
 
 @Component({

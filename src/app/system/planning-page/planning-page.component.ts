@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BillService} from '../shared/services/bill.service';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+
 import {CategoriesService} from '../shared/services/categories.service';
 import {EventsService} from '../shared/services/events.service';
-import {Observable} from 'rxjs/Observable';
 import {Bill} from '../shared/models/bill.model';
 import {Category} from '../shared/models/category.model';
 import {SERTEvent} from '../shared/models/event.model';
-import {Subscription} from 'rxjs/Subscription';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'sert-planning-page',
@@ -23,7 +25,14 @@ export class PlanningPageComponent implements OnInit, OnDestroy {
 
   constructor(private billService: BillService,
               private categoriesService: CategoriesService,
-              private eventsService: EventsService) {
+              private eventsService: EventsService,
+              private title: Title,
+              private meta: Meta) {
+    title.setTitle('Планирование');
+    meta.addTags([
+      {name: 'keywords', content: 'планирование, расходы, остатки'},
+      {name: 'description', content: 'Страница планирования расходов'},
+    ]);
   }
 
   ngOnInit() {

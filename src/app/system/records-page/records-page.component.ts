@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {Category} from '../shared/models/category.model';
 import {CategoriesService} from '../shared/services/categories.service';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'sert-records-page',
@@ -14,7 +15,14 @@ export class RecordsPageComponent implements OnInit {
   categories: Category[] = [];
   isLoaded = false;
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor(private categoriesService: CategoriesService,
+              private title: Title,
+              private meta: Meta) {
+    title.setTitle('Записи');
+    meta.addTags([
+      {name: 'keywords', content: 'записи, доход, расход'},
+      {name: 'description', content: 'Страница записей'},
+    ]);
   }
 
   ngOnInit() {

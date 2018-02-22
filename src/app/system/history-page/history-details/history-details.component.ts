@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+
 import {EventsService} from '../../shared/services/events.service';
 import {CategoriesService} from '../../shared/services/categories.service';
 import {SERTEvent} from '../../shared/models/event.model';
 import {Category} from '../../shared/models/category.model';
-import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'sert-history-details',

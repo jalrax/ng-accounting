@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CategoriesService} from '../shared/services/categories.service';
-import {EventsService} from '../shared/services/events.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
+import * as moment from 'moment';
+
+import {CategoriesService} from '../shared/services/categories.service';
+import {EventsService} from '../shared/services/events.service';
 import {Category} from '../shared/models/category.model';
 import {SERTEvent} from '../shared/models/event.model';
-import * as moment from 'moment';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'sert-history-page',
@@ -23,9 +25,15 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   chartData = [];
 
   constructor(private categoriesService: CategoriesService,
-              private eventsService: EventsService) {
+              private eventsService: EventsService,
+              private title: Title,
+              private meta: Meta) {
+    title.setTitle('История операций');
+    meta.addTags([
+      {name: 'keywords', content: 'история, события, график'},
+      {name: 'description', content: 'Страница истории операций пользователя'},
+    ]);
   }
-
   ngOnInit() {
     this.sub1 = Observable.combineLatest(
       this.categoriesService.getCategories(),

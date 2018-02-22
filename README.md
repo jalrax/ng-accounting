@@ -1,6 +1,6 @@
-## To Run app ##
+## Start app for development mode ##
 
-Run `npm run dev` to execute app.
+Run `npm run dev`.
 
 # NgAccounting
 

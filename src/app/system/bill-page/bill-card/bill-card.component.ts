@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+
 import {Bill} from '../../shared/models/bill.model';
 
 @Component({

@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
+
 import {SystemComponent} from './system.component';
 import {BillPageComponent} from './bill-page/bill-page.component';
 import {HistoryPageComponent} from './history-page/history-page.component';

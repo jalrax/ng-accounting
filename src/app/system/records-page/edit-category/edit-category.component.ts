@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
 
 import {Category} from '../../shared/models/category.model';
 import {CategoriesService} from '../../shared/services/categories.service';
 import {Message} from '../../../shared/models/message.model';
-import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'sert-edit-category',

@@ -1,14 +1,15 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Category} from '../../shared/models/category.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SERTEvent} from '../../shared/models/event.model';
+import {Subscription} from 'rxjs/Subscription';
+import 'rxjs/add/operator/mergeMap';
 import * as moment from 'moment';
+
+import {SERTEvent} from '../../shared/models/event.model';
 import {EventsService} from '../../shared/services/events.service';
+import {Category} from '../../shared/models/category.model';
 import {Bill} from '../../shared/models/bill.model';
 import {BillService} from '../../shared/services/bill.service';
-import 'rxjs/add/operator/mergeMap';
 import {Message} from '../../../shared/models/message.model';
-import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'sert-add-event',

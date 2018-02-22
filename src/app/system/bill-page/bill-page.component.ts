@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/delay';
 
 import {BillService} from '../shared/services/bill.service';
 import {Bill} from '../shared/models/bill.model';
-import 'rxjs/add/operator/delay';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'sert-bill-page',
@@ -20,7 +21,14 @@ export class BillPageComponent implements OnInit, OnDestroy {
   bill: Bill;
   isLoaded = false;
 
-  constructor(private billService: BillService) {
+  constructor(private billService: BillService,
+              private title: Title,
+              private meta: Meta) {
+    title.setTitle('Счёт пользователя');
+    meta.addTags([
+      {name: 'keywords', content: 'счет, курс, валюты'},
+      {name: 'description', content: 'Страница счёта'},
+    ]);
   }
 
   ngOnInit() {

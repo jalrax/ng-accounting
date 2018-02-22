@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+
 import {SERTEvent} from '../../shared/models/event.model';
 import {Category} from '../../shared/models/category.model';
 

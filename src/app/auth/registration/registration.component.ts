@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {Meta, Title} from '@angular/platform-browser';
 
 import {UsersService} from '../../shared/services/users.service';
 import {User} from '../../shared/models/user.model';
-import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'sert-registration',
